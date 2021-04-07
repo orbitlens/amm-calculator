@@ -51,7 +51,7 @@ module.exports = function (env, argv) {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: '[id].css'
+                filename: '[name].css'
             }),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(mode),
@@ -65,9 +65,6 @@ module.exports = function (env, argv) {
                 http: false,
                 https: false,
             }
-        },
-        optimization: {
-            moduleIds: 'deterministic'
         },
         devtool: 'source-map',
         devServer: {
