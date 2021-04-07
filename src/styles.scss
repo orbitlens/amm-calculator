@@ -1,0 +1,89 @@
+$fontSize: 14px;
+$space: 1.5*$fontSize;
+
+html {
+  font-size: $fontSize;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  padding: $space;
+  margin: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  font-size: $fontSize;
+  min-width: 10em;
+  text-align: center;
+  background: linear-gradient(90deg, #ccc 0%, #eee 100%);
+  border-radius: 2px;
+  border: 1px solid #bbb;
+  padding: 0 0.3*$space;
+  height: 1.6*$space;
+  cursor: pointer;
+
+  &:hover {
+    background: #e5e5e5;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    background: #ccc;
+    border-color: #aaa;
+  }
+
+  &:disabled {
+    background: #ccc;
+    border-color: #bbb;
+    color: #999;
+    cursor: default;
+  }
+
+  + button {
+    margin-left: $space;
+  }
+}
+
+input[type="text"] {
+  width: 5em;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.space {
+  padding-top: $space;
+}
+
+.micro-space {
+  padding-top: 0.5*$space;
+}
+
+.dimmed {
+  color: #999;
+}
+
+.tabs {
+  border-bottom: 2px solid #e5e5e5;
+  height: 1.65em;
+
+  a {
+    padding: 0.5em;
+
+    &.active {
+      color: #555;
+      border-bottom: 2px solid;
+    }
+  }
+}

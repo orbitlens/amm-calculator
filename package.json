@@ -1,0 +1,43 @@
+{
+  "name": "amm-calculator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AMM invariants calculator",
+  "scripts": {
+    "build": "webpack --mode=production --config ./webpack.config.js",
+    "dev-server": "webpack serve --mode development --config ./webpack.config.js"
+  },
+  "keywords": [
+    "amm",
+    "liquidity",
+    "pool",
+    "calculator",
+    "stellar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orbitlens/amm-calculator.git"
+  },
+  "author": "OrbitLens <orbit@stellar.expert>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "classnames": "^2.2.6",
+    "css-loader": "^5.2.0",
+    "deepmerge": "^4.2.2",
+    "mini-css-extract-plugin": "^1.4.0",
+    "node-sass": "^5.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-fast-compare": "^3.2.0",
+    "sass-loader": "^11.0.1",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
