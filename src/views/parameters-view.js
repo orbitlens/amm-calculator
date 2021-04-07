@@ -1,16 +1,7 @@
 import React from 'react'
 import {resetHistory} from './history-view'
 import ammStrategies from '../strategies/amm'
-import {useStorage} from './storage-context'
-
-function reinit(params) {
-    return Object.assign({
-        ammStrategy: ammStrategies[0].key,
-        users: [{name: 'u1', stake: 0}],
-        fee: 3,
-        state: null
-    }, params)
-}
+import {initContext, useStorage} from './storage-context'
 
 export default function ParametersView() {
     const [storage, update] = useStorage()
@@ -20,7 +11,7 @@ export default function ParametersView() {
         <label>
             AMM strategy:{' '}
             <select value={ammStrategy} onChange={e => {
-                update(reinit({ammStrategy: e.target.value}))
+                update(initContext({ammStrategy: e.target.value}))
                 resetHistory()
             }}>
                 {ammStrategies.map(s => <option value={s.key} key={s.key}>{s.name}</option>)}
@@ -36,7 +27,7 @@ export default function ParametersView() {
         </label>
         &emsp;
         <button onClick={e => {
-            update(reinit())
+            update(initContext())
             resetHistory()
         }}>reset</button>
     </div>

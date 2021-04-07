@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState} from 'react'
 import equals from 'react-fast-compare'
 import deepmerge from 'deepmerge'
+import ammStrategies from '../strategies/amm'
 
 class StoredData {
     ammStrategy
@@ -10,6 +11,18 @@ class StoredData {
 }
 
 let currentContext = new StoredData()
+
+export function initContext(params) {
+    return Object.assign({
+        ammStrategy: ammStrategies[0].key,
+        users: [{name: 'u1', stake: 0}],
+        fee: 3,
+        state: null
+    }, params)
+}
+
+Object.assign(currentContext, initContext())
+
 //load context from location.hash
 if (location.hash) {
     try {
