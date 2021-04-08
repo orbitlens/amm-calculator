@@ -4,17 +4,18 @@ export default {
     estimatePriceBoundSwap: function (pool, fee, price, approximation) {
         const currentPrice = this.getPrice(pool)
         let a, b
-        if (price === currentPrice) {
-            return {a: 0, b: 0}
-        } else if (price > currentPrice) {
-            a = (Math.sqrt(pool.amountA * pool.amountB * price) - pool.amountA) * (1 + fee)
-            b = (pool.amountA + a) / price - pool.amountB
-            return {a: approximation(Math.ceil, a), b: approximation(Math.ceil, b)}
-        } else {
-            b = (Math.sqrt(pool.amountA * pool.amountB / price) - pool.amountB) * (1 + fee)
-            a = price * (pool.amountB + b) - pool.amountA
-            return {a: approximation(Math.ceil, a), b: approximation(Math.ceil, b)}
+        if (price > currentPrice) {
+            a = approximation(Math.ceil, (Math.sqrt(pool.amountA * pool.amountB * price) - pool.amountA) * (1 + fee))
+            b = approximation(Math.ceil, (pool.amountA + a) / price - pool.amountB)
         }
+        if (price < currentPrice) {
+            b = approximation(Math.ceil, (Math.sqrt(pool.amountA * pool.amountB / price) - pool.amountB) * (1 + fee))
+            a = approximation(Math.ceil, price * (pool.amountB + b) - pool.amountA)
+        }
+        if (!a || !b) {
+            a = b = 0
+        }
+        return {a, b}
     },
     estimateBuyAmount(pool, fee, token, amount, approximation) {
         if (token === 'A') return {
@@ -46,14 +47,12 @@ export default {
         return `SWAP_SUCCESS - swapped ${a}A ↔ ${b}B`
     },
     getPrice: function (pool) {
-        if (pool.amountA > 0) {
-            return pool.amountA / pool.amountB
-        }
+        if (pool.amountA > 0) return pool.amountA / pool.amountB
         return 1 //this is a new pool
     },
     calculateStake: function (pool, depositAmountA, depositAmountB) {
         if (!pool.amountA) return Math.min(depositAmountA, depositAmountB) //new pool
-        //weight S=A*B*Sp/(Ap*Bp)
+        //weight s=a*b*S/(A*B)
         return Math.floor(depositAmountA * depositAmountB * pool.stakes / (pool.amountA * pool.amountB))
     },
     deposit: function (pool, user, amountA, amountB) {
