@@ -7,7 +7,7 @@ export function resetHistory() {
 }
 
 export function logHistory(record) {
-    setHistoryRef(history => [record, ...history])
+    setHistoryRef(history => [{n: history.length, record}, ...history])
 }
 
 export default function HistoryView() {
@@ -16,7 +16,7 @@ export default function HistoryView() {
     return <>
         <h3>Operations history</h3>
         <ul>
-            {history.map(r => <li key={r}>{r}</li>)}
+            {history.map(r => <li key={r.n}>{r.record}</li>)}
         </ul>
     </>
 }

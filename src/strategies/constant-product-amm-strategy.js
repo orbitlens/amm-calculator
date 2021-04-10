@@ -53,7 +53,7 @@ export default {
     calculateStake: function (pool, depositAmountA, depositAmountB) {
         if (!pool.amountA) return Math.min(depositAmountA, depositAmountB) //new pool
         //weight s=a*b*S/(A*B)
-        return Math.floor(depositAmountA * depositAmountB * pool.stakes / (pool.amountA * pool.amountB))
+        return Math.floor(Math.sqrt(depositAmountA * depositAmountB))
     },
     deposit: function (pool, user, amountA, amountB) {
         if (user.stake) return `Error - DEPOSIT_ALREADY_EXISTS`
@@ -82,7 +82,7 @@ export default {
         pool.stakes += stake
         pool.amountA += depositAmountA
         pool.amountB += depositAmountB
-        return `DEPOSIT_SUCCESS - deposited ${depositAmountA}A and ${depositAmountB}B - stake ${stake}`
+        return `DEPOSIT_SUCCESS - deposited ${depositAmountA}A and ${depositAmountB}B → stake ${stake}`
     },
     withdraw: function (pool, user) {
         const {stake} = user
@@ -100,6 +100,6 @@ export default {
         pool.amountA -= amountA
         pool.amountB -= amountB
         user.stake = 0
-        return `WITHDRAW_STAKE_SUCCESS - received ${amountA}A and ${amountB}B - stake ${stake}`
+        return `WITHDRAW_STAKE_SUCCESS - stake ${stake} → received ${amountA}A and ${amountB}B`
     }
 }

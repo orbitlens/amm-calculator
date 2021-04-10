@@ -18,7 +18,7 @@ export default function UserSelectorView({children, props = {}}) {
 
     function selectUser(u) {
         setUser(u)
-        if (u === newOption.name) {
+        if (newOption && u === newOption.name) {
             addNewUser(u)
         }
     }

@@ -77,7 +77,8 @@ export default function SwapView({user}) {
             <p>
                 Estimated swap: user swaps {swapDirection({a, b})}<br/>
                 Average price: {formatWithAutoPrecision(Math.abs(a / b))}<br/>
-                Pool balance after the swap: {newA} A&emsp;{newB} B&emsp;k={newA * newB}
+                Pool balance after the
+                swap: {newA} A&emsp;{newB} B&emsp;k={newA * newB}&emsp;p={formatWithAutoPrecision(newA / newB)}
             </p>
         </div>}
         <label>
