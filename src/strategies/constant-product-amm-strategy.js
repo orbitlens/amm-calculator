@@ -39,24 +39,23 @@ export default {
     },
     swap: function (pool, a, b) {
         if (pool.amountA * pool.amountB > (pool.amountA + a) * (pool.amountB + b))
-            return `Internal error - invalid swap amount: ${a}A ${b}B`
+            return `Internal error - invalid pool liquidity after the trade, swap amount: ${a}A ${b}B`
         if (a === 0 || b === 0)
             return `Error - invalid swap amount: ${a}A ${b}B`
         pool.amountA += a
         pool.amountB += b
-        return `SWAP_SUCCESS - swapped ${a}A ↔ ${b}B`
+        return `SWAP_SUCCESS - swapped ${a}A ↔ ${b}B, pool balance ${pool.amountA}A ${pool.amountB}B`
     },
     getPrice: function (pool) {
         if (pool.amountA > 0) return pool.amountA / pool.amountB
         return 1 //this is a new pool
     },
     calculateStake: function (pool, depositAmountA, depositAmountB) {
-        if (!pool.amountA) return Math.min(depositAmountA, depositAmountB) //new pool
-        //weight s=a*b*S/(A*B)
-        return Math.floor(Math.sqrt(depositAmountA * depositAmountB))
+        if (!pool.amountA) return Math.floor(Math.sqrt(depositAmountA * depositAmountB)) //new pool
+        return Math.floor(Math.sqrt(depositAmountA * depositAmountB) * pool.stakes / Math.sqrt(pool.amountA * pool.amountB))
     },
     deposit: function (pool, user, amountA, amountB) {
-        if (user.stake) return `Error - DEPOSIT_ALREADY_EXISTS`
+        if (user.stake) return `Error - DEPOSIT_ALREADY_EXISTS - account ${user.name}`
         const p = this.getPrice(pool)
         let depositAmountA = amountA,
             depositAmountB = amountB
@@ -72,7 +71,7 @@ export default {
         }
         if (depositAmountA && depositAmountB && (depositAmountA <= 0 || depositAmountB <= 0)) return 'Error - DEPOSIT_INSUFFICIENT_AMOUNT'
         const stake = this.calculateStake(pool, depositAmountA, depositAmountB)
-        if (stake <= 0) return 'Error - DEPOSIT_INSUFFICIENT_AMOUNT'
+        if (stake <= 0) return `Error - DEPOSIT_INSUFFICIENT_AMOUNT - account ${user.name}`
         user.stake = stake
         if (!pool.stakes) { //new pool
             pool.stakes = 0
@@ -82,7 +81,7 @@ export default {
         pool.stakes += stake
         pool.amountA += depositAmountA
         pool.amountB += depositAmountB
-        return `DEPOSIT_SUCCESS - deposited ${depositAmountA}A and ${depositAmountB}B → stake ${stake}`
+        return `DEPOSIT_SUCCESS - account ${user.name} deposited ${depositAmountA}A and ${depositAmountB}B → stake ${stake}`
     },
     withdraw: function (pool, user) {
         const {stake} = user
@@ -92,14 +91,14 @@ export default {
             amountA = pool.amountA
             amountB = pool.amountB
         } else {
-            const portion = stake / pool.stakes
-            amountA = Math.floor(pool.amountA * portion)
-            amountB = Math.floor(pool.amountB * portion)
+            let liquidity = stake / pool.stakes
+            amountA = Math.floor(pool.amountA * liquidity)
+            amountB = Math.floor(pool.amountB * liquidity)
         }
         pool.stakes -= stake
         pool.amountA -= amountA
         pool.amountB -= amountB
         user.stake = 0
-        return `WITHDRAW_STAKE_SUCCESS - stake ${stake} → received ${amountA}A and ${amountB}B`
+        return `WITHDRAW_STAKE_SUCCESS - account ${user.name} withdrew stake ${stake} → ${amountA}A and ${amountB}B`
     }
 }
