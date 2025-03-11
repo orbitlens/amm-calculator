@@ -5,11 +5,11 @@ export default {
         const currentPrice = this.getPrice(pool)
         let a, b
         if (price > currentPrice) {
-            a = approximation(Math.ceil, (Math.sqrt(pool.amountA * pool.amountB * price) - pool.amountA) * (1 + fee))
+            a = approximation(Math.ceil, (Math.sqrt(pool.amountA * pool.amountB * price) - pool.amountA) * Math.sqrt((1 + fee)))
             b = approximation(Math.ceil, (pool.amountA + a) / price - pool.amountB)
         }
         if (price < currentPrice) {
-            b = approximation(Math.ceil, (Math.sqrt(pool.amountA * pool.amountB / price) - pool.amountB) * (1 + fee))
+            b = approximation(Math.ceil, (Math.sqrt(pool.amountA * pool.amountB / price) - pool.amountB) * Math.sqrt((1 + fee)))
             a = approximation(Math.ceil, price * (pool.amountB + b) - pool.amountA)
         }
         if (!a || !b) {
