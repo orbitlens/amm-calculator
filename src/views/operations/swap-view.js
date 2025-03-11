@@ -52,8 +52,8 @@ export default function SwapView({user}) {
             <option value="amount">amount-targeted</option>
         </select>
         {target === 'price' ? <p>
-            <label>{direction} {token} tokens up to price{' '}
-                <input type="text" value={price === '0' ? '' : price}
+            <label>Swap tokens up to price{' '}
+                <input type="text" value={price === '0' ? '' : price} style={{width: '10em'}}
                        onChange={e => setPrice(filterDecimalCharacters(e.target.value) || '0')}/> A/B</label>
         </p> : <>
             &emsp;
@@ -67,7 +67,7 @@ export default function SwapView({user}) {
                 <option value="B">token B</option>
             </select>
             <p>
-                <label>{direction} <input type="text" value={amount === '0' ? '' : amount}
+                <label>{direction} <input type="text" value={amount === '0' ? '' : amount}  style={{width: '12em'}}
                                           onChange={e => setAmount(filterNumbersOnly(e.target.value) || '0')}/>
                     {' '}{token} tokens
                 </label>

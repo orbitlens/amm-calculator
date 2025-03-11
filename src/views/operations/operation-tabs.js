@@ -6,9 +6,9 @@ import WithdrawView from './widthdraw-view'
 import SwapView from './swap-view'
 
 const tabs = [
-    {key: 'swap', text: 'Swap'},
     {key: 'deposit', text: 'Deposit'},
-    {key: 'withdraw', text: 'Withdraw'}
+    {key: 'withdraw', text: 'Withdraw'},
+    {key: 'swap', text: 'Swap'}
 ]
 
 function OperationView({operation}) {

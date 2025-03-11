@@ -20,7 +20,7 @@ export default function ParametersView() {
         &emsp;
         <label>
             Trading fee:{' '}
-            <input type="text" style={{textAlign: 'right'}} value={fee} onChange={e => {
+            <input type="text" style={{textAlign: 'right', width: '12em'}} value={fee} onChange={e => {
                 const parsed = parseInt(e.target.value)
                 if (parsed >= 0 && parsed < 1000) update({fee: parsed})
             }}/> ‰

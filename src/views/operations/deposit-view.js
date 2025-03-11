@@ -19,10 +19,10 @@ export default function DepositView({user}) {
 
     return <>
         <div>
-            <label>Amount A <input type="text" value={amountA === '0' ? '' : amountA}
+            <label>Amount A <input type="text" value={amountA === '0' ? '' : amountA} style={{width: '12em'}}
                                    onChange={e => setAmountA(filterNumbersOnly(e.target.value) || '0')}/></label>
             &emsp;
-            <label>Amount B <input type="text" value={amountB === '0' ? '' : amountB}
+            <label>Amount B <input type="text" value={amountB === '0' ? '' : amountB} style={{width: '12em'}}
                                    onChange={e => setAmountB(filterNumbersOnly(e.target.value) || '0')}/></label>
         </div>
         <div className="space">
